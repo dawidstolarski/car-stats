@@ -1,0 +1,35 @@
+.brand-logo{
+    margin-left: 10px;
+}
+.sidenav-trigger{
+    display: none;
+}
+.start{
+    display: none;
+}
+.error-continue,
+.error-start,
+.error-modal-editinfo{
+    display: none;
+}
+.continue{
+    display: none;
+}
+.stats{
+    display: none;
+}
+.showtable{
+    overflow-x: auto;
+    text-align: center;
+}
+th, td{
+    border: 1px solid rgba(0,0,0,0.12) !important;
+    text-align: center !important;
+}
+tr.cursor{
+    cursor: pointer;
+}
+tr.selected{
+    font-weight: bold;
+    color: #ee6e73;
+}

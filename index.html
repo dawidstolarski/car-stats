@@ -1,0 +1,176 @@
+<head>
+    <title>Car Stats</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+    <link type="text/css" rel="stylesheet" href="materialize.min.css"  media="screen,projection"/>
+    <script defer src="app.js"></script>
+    <script defer type="text/javascript" src="materialize.min.js"></script>
+</head>
+<body>
+    <!-- menu -->
+    <ul id="slide-out" class="sidenav">
+        <li class="show-start"><a href="#"><i class="material-icons">near_me</i>Start</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Menu</a></li>
+        <li><a class="waves-effect show-stats" href="#"><i class="material-icons">insert_chart</i>Stats</a></li>
+        <li><a class="waves-effect show-edit-reg" href="#"><i class="material-icons">edit</i>Edit Informations</a></li>
+    </ul>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Car Stats Bussiness</a>
+            <a class="sidenav-trigger right" data-target="slide-out" href="#"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- conf -->
+        <div class="conf center">
+            <h1>Car Stats Bussiness</h1>
+            <p class="flow-text">The best record tool for managing car route.</p>
+            <a class="btn-floating btn-large waves-effect waves-light red show-edit-reg"><i class="material-icons">add</i></a>
+        </div>
+        <!-- start -->
+        <div class="start center">
+            <h2>Start your way!</h2>
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">drive_eta</i>
+                                    <input id="start-count-inpt" type="number" class="validate">
+                                    <label for="start-count-inpt">Meter Reading</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">map</i>
+                                    <input id="start-destination-inpt" type="text" class="validate">
+                                    <label for="start-destination-inpt">Destination</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">my_location</i>
+                                    <input id="start-startplace-inpt" type="text" class="validate">
+                                    <label for="start-startplace-inpt">Starting Place</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">timer</i>
+                                    <input id="start-time-inpt" class="timepicker-start" type="text" class="validate">
+                                    <label for="start-time-inpt">Start Time</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">account_circlen</i>
+                                    <input id="start-name-inpt" type="text" class="validate">
+                                    <label for="start-name-inpt">Your Name</label>
+                                </div>
+                            </div>
+                            <p class="error-start red-text center"><b>Error!</b></p>
+                            <button class="btn waves-effect waves-light right start-road-btn">Start
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- continue -->
+        <div class="continue center">
+            <h3>Driving...</h3>
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">drive_eta</i>
+                                    <input id="stop-count-inpt" type="number" class="validate">
+                                    <label for="stop-count-inpt">Meter Reading</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">timer</i>
+                                    <input id="stop-time-inpt" class="timepicker-end" type="text" class="validate">
+                                    <label for="stop-time-inpt">End Time</label>
+                                </div>
+                                <label>
+                                    <input type="checkbox" class="filled-in" id="roundtrip-checkbox" checked="checked" />
+                                    <span>Round-Trip</span>
+                                </label>
+                            </div>
+                            <ul class="collapsible z-depth-0">
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">local_gas_station</i>Refueling</div>
+                                    <div class="collapsible-body">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">attach_money</i>
+                                            <input id="stop-rmoney-inpt" type="number" class="validate">
+                                            <label for="stop-rmoney-inpt">Fuel Expense</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">drive_eta</i>
+                                            <input id="stop-rcount-inpt" type="number" class="validate">
+                                            <label for="stop-rcount-inpt">Amount of Fuel</label>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p class="error-continue red-text center"><b>Error!</b></p>
+                            <button class="btn waves-effect waves-light right stop-road-btn">Stop
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hiddentable hide"></div>
+        </div>
+        <!-- stats -->
+        <div class="stats center">
+            <h2>Stats</h2>
+            <div class="showtable center">
+                <p class="flow-text">Nothing to see.</p>
+            </div>
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large red">
+                    <i class="large material-icons">mode_edit</i>
+                </a>
+                <ul>
+                    <li><a class="btn-floating red removeselectedtable"><i class="material-icons">remove_circle_outline</i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- edit info modal -->
+    <div id="modal-editinfo" class="modal">
+        <div class="modal-content">
+            <h4>Edit Informations</h4>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="edit-name-inpt" type="text" class="validate">
+                    <label for="edit-name-inpt">Default name</label>
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">book</i>
+                    <input id="edit-id-inpt" type="text" class="validate">
+                    <label for="edit-id-inpt">Car ID</label>
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">my_location</i>
+                    <input id="edit-dloc-inpt" type="text" class="validate">
+                    <label for="edit-dloc-inpt">Default Starting Place</label>
+                </div>
+            </div>
+            <p class="error-modal-editinfo red-text center"><b>Error!</b></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="waves-effect waves-red btn-flat left delete-info-btn">Delete</a>
+            <a href="#" class="modal-close waves-effect waves-red btn-flat left delete-table-btn">Remove Table</a>
+            <a href="#" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="#" class="waves-effect waves-green btn-flat update-info-btn"><b>Update</b></a>
+        </div>
+    </div>
+</body>
