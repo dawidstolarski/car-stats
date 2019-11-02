@@ -33,3 +33,15 @@ tr.selected{
     font-weight: bold;
     color: #ee6e73;
 }
+.exportoptions{
+    margin-bottom: 20px;
+    display: none;
+}
+.exportoptions i{
+    font-size: 30px;
+    cursor: pointer;
+    margin: 10px;
+}
+.hidden{
+    visibility: hidden;
+}

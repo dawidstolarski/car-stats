@@ -21,6 +21,7 @@ $(function(){
         $("#edit-name-inpt").val(localStorage.getItem('csb-name'));
         $("#edit-id-inpt").val(localStorage.getItem('csb-id'));
         $("#edit-dloc-inpt").val(localStorage.getItem('csb-dloc'));
+        M.updateTextFields();
         $(".error-modal-editinfo").hide();
         $('.sidenav').sidenav('close');
         $('#modal-editinfo').modal('open');
@@ -31,11 +32,13 @@ $(function(){
         var name = $("#edit-name-inpt").val();
         var id = $("#edit-id-inpt").val();
         var dloc = $("#edit-dloc-inpt").val();
+        var prevkm = document.getElementById("prevkm-checkbox").checked;
         if(id !== "" && id !== null){
             $(".stats").hide();
             localStorage.setItem('csb-name', name);
             localStorage.setItem('csb-id', id);
             localStorage.setItem('csb-dloc', dloc);
+            localStorage.setItem('csb-prevkm', prevkm);
             $('#modal-editinfo').modal('close');
             checkToEnable();
         }else{
@@ -48,6 +51,8 @@ $(function(){
         localStorage.removeItem('csb-name');
         localStorage.removeItem('csb-id');
         localStorage.removeItem('csb-dloc');
+        localStorage.removeItem('csb-prevkm');
+        localStorage.removeItem('csb-prevkmcount');
         localStorage.removeItem('csb-table');
         $('#modal-editinfo').modal('close');
         checkToEnable();
@@ -75,13 +80,18 @@ $(function(){
     function home(){
         $("#start-startplace-inpt").val(localStorage.getItem('csb-dloc'));
         $("#start-name-inpt").val(localStorage.getItem('csb-name'));
-        $("#start-count-inpt").val("");
+        if(localStorage.getItem("csb-prevkm") == "true" && localStorage.getItem("csb-prevkmcount") !== undefined){
+            $("#start-count-inpt").val(localStorage.getItem("csb-prevkmcount"));
+        }else{
+            $("#start-count-inpt").val("");
+        }
         $("#start-time-inpt").val("");
         $("#start-destination-inpt").val("");
         $("#stop-rmoney-inpt").val("");
         $("#stop-rcount-inpt").val("");
         $("#stop-time-inpt").val("");
         $("#stop-count-inpt").val("");
+        M.updateTextFields();
         $(".error-start").hide();
         $(".error-continue").hide();
     }
@@ -166,6 +176,7 @@ $(function(){
                     $('.hiddentable tr:last').after(`<tr><td>${datet}</td><td>${namet}</td><td>${roadt}</td><td>${timest}</td><td>${countst}</td><td>${timeendt}</td><td>${countendt}</td><td>${course} km</td><td>${fuelinfo}</td></tr>`);
                     localStorage.setItem('csb-table', $(".hiddentable").html());
                 }
+                localStorage.setItem("csb-prevkmcount", countendt);
                 localStorage.removeItem("csb-c-destination");
                 localStorage.removeItem("csb-c-startplace");
                 localStorage.removeItem("csb-c-name");
@@ -185,8 +196,10 @@ $(function(){
         $(".stats").delay(350).fadeIn();
         $(".showtable").html("<p class='flow-text'>Nothing to see.</p>");
         if(localStorage.getItem("csb-table") !== undefined && localStorage.getItem("csb-table") !== null){
+            $(".exportoptions").show();
             $(".showtable").html(localStorage.getItem("csb-table"));
-            
+        }else{
+            $(".exportoptions").hide();
         }
     })
     $(".show-start").click(function(){
@@ -209,5 +222,25 @@ $(function(){
         }else{
             localStorage.setItem('csb-table', $(".showtable").html());
         }
+    })
+    $(".print").click(function(){
+        $("table").attr('border', 1);
+        var divToPrint=document.getElementById("toprint");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    })
+    $(".exporttable").click(function(){
+        var reg = localStorage.getItem("csb-id");
+        var wb = XLSX.utils.table_to_book(document.getElementById('tabletoprint'), {sheet:reg});
+        var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+        saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), `CSB - ${reg}.xlsx`);
     })
 });
