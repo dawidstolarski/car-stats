@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <link type="text/css" rel="stylesheet" href="materialize.min.css"  media="screen,projection"/>
     <script defer src="app.js"></script>
@@ -20,6 +21,8 @@
         <li><a class="subheader">Menu</a></li>
         <li><a class="waves-effect show-stats" href="#"><i class="material-icons">insert_chart</i>Stats</a></li>
         <li><a class="waves-effect show-edit-reg" href="#"><i class="material-icons">edit</i>Edit Informations</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="waves-effect show-appinfo " href="#"><i class="material-icons">info</i>App Info</a></li>
     </ul>
     <nav>
         <div class="nav-wrapper">
@@ -142,7 +145,7 @@
                 </div>
             </div>
 
-            <div class="fixed-action-btn">
+            <div class="fixed-action-btn edittools">
                 <a class="btn-floating btn-large red">
                     <i class="large material-icons">mode_edit</i>
                 </a>
@@ -185,6 +188,20 @@
             <a href="#" class="modal-close waves-effect waves-red btn-flat left delete-table-btn">Remove Table</a>
             <a href="#" class="modal-close waves-effect waves-green btn-flat">Close</a>
             <a href="#" class="waves-effect waves-green btn-flat update-info-btn"><b>Update</b></a>
+        </div>
+    </div>
+    <!-- modal app info -->
+    <div id="modal-appinfo" class="modal">
+        <div class="modal-content center">
+            <h4>App Info</h4>
+            </br>
+            <p><b>Created by</b></p>
+            <img src="logo-leszekkeu.svg" alt="Leszekk.eu-Logo" class="lk-logo">
+            <p>&copy; Leszekk.eu</p>
+            <p>&copy; CarStats.web.app</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">ok</a>
         </div>
     </div>
 </body>

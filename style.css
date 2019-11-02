@@ -17,6 +17,7 @@
 }
 .stats{
     display: none;
+    margin-bottom: 50px;
 }
 .showtable{
     overflow-x: auto;
@@ -44,4 +45,18 @@ tr.selected{
 }
 .hidden{
     visibility: hidden;
+}
+.lk-logo{
+    width: 80%;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.lk-logo:hover{
+    transform: scale(0.97);
+}
+@media only screen and (min-width:700px){
+    .lk-logo{
+        width: 50%;
+    }
 }

@@ -1,10 +1,16 @@
 var readytotable = false;
 var select = false;
 $(function(){
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
     checkToEnable();
     $('.sidenav').sidenav();
     $('.modal').modal();
-
+    $(".show-appinfo").click(function(){
+        $('.sidenav').sidenav('close');
+        $('#modal-appinfo').modal('open');
+    })
     $('.timepicker-start').timepicker();
     $('.timepicker-start').timepicker({
         autoClose: true,
@@ -102,13 +108,16 @@ $(function(){
         var startplace = $("#start-startplace-inpt").val();
         var name = $("#start-name-inpt").val();
         var time = $("#start-time-inpt").val();
-        if(count.length > 2 && destination.length > 2 && startplace.length > 2 && name.length > 2 && time.length > 2){
+        if(count.length > 2 && destination.length > 2 && startplace.length > 2 && name.length > 2){
             $(".error-start").hide();
             localStorage.setItem('csb-c-count', count);
             localStorage.setItem('csb-c-destination', destination);
             localStorage.setItem('csb-c-startplace', startplace);
             localStorage.setItem('csb-c-name', name);
-            localStorage.setItem('csb-c-time', time);
+            if(time.length > 0){
+                localStorage.setItem('csb-c-time', time);
+            }
+            
             started();
             
         }else{
@@ -121,7 +130,7 @@ $(function(){
         var startplace = localStorage.getItem('csb-c-startplace');
         var name = localStorage.getItem('csb-c-name');
         var time = localStorage.getItem('csb-c-time');
-        if(count !== undefined && destination !== undefined && startplace !== undefined && name !== undefined && time !== undefined){
+        if(count !== undefined && destination !== undefined && startplace !== undefined && name !== undefined){
             $(".conf").hide();
             $(".start").hide();
             $(".continue").fadeIn();
@@ -136,7 +145,7 @@ $(function(){
             var stime = $("#stop-time-inpt").val();
             var smoney = $("#stop-rmoney-inpt").val();
             var scountmoney = $("#stop-rcount-inpt").val();
-            if(scount.length > 0 && stime.length > 0){
+            if(scount.length > 0){
                 if(smoney.length > 0 && scountmoney.length >0){
                     fuel = true;
                 }
@@ -152,10 +161,18 @@ $(function(){
                 }else{
                     var roadt = localStorage.getItem('csb-c-startplace') + " -> " + localStorage.getItem('csb-c-destination');
                 }
-
-                var timest = localStorage.getItem('csb-c-time');
+                if(localStorage.getItem('csb-c-time') !== undefined && localStorage.getItem('csb-c-time') !== null){
+                    var timest = localStorage.getItem('csb-c-time');
+                }else{
+                    var timest = "-";
+                }
+                
                 var countst = localStorage.getItem('csb-c-count');
-                var timeendt = stime;
+                if(stime !== undefined && stime !== ""){
+                    var timeendt = stime;
+                }else{
+                    var timeendt = "-";
+                }
                 var countendt = scount;
 
                 var course = countendt - countst;
@@ -198,8 +215,10 @@ $(function(){
         if(localStorage.getItem("csb-table") !== undefined && localStorage.getItem("csb-table") !== null){
             $(".exportoptions").show();
             $(".showtable").html(localStorage.getItem("csb-table"));
+            $(".edittools").show();
         }else{
             $(".exportoptions").hide();
+            $(".edittools").hide();
         }
     })
     $(".show-start").click(function(){
@@ -230,6 +249,7 @@ $(function(){
         newWin.document.write(divToPrint.outerHTML);
         newWin.print();
         newWin.close();
+        $("table").removeAttr("border");
     })
     $(".exporttable").click(function(){
         var reg = localStorage.getItem("csb-id");
@@ -242,5 +262,8 @@ $(function(){
             return buf;
         }
         saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), `CSB - ${reg}.xlsx`);
+    })
+    $(".lk-logo").click(function(){
+        window.open("https://leszekk.eu")
     })
 });
