@@ -2,7 +2,7 @@
   "name": "Car Stats Bussiness",
   "short_name": "CSB",
   "theme_color": "#ee6e73",
-  "background_color": "#2e363e",
+  "background_color": "#1D2124",
   "display": "standalone",
   "Scope": "/",
   "start_url": "/index.html",
