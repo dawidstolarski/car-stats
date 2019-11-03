@@ -2,7 +2,6 @@ var readytotable = false;
 var select = false;
 $(function(){
     $('.modal').modal();
-    $('#modal-iospwainstall').modal('open');
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
         let deferredPrompt;
