@@ -25,7 +25,7 @@ $(function(){
           }
         const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
         if (isIos() && !isInStandaloneMode()) {
-            if(localStorage.getItem("ios-ip-notagain") == "true"){
+            if(localStorage.getItem("ios-ip-notagain") == "true" || localStorage.getItem("ios-ip-notagain") == undefined){
                 $(".installprompt").slideDown();
             }
         }
