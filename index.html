@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png">
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <link type="text/css" rel="stylesheet" href="materialize.min.css"  media="screen,projection"/>
     <script defer src="app.js"></script>
@@ -24,6 +25,13 @@
         <li><div class="divider"></div></li>
         <li><a class="waves-effect show-appinfo " href="#"><i class="material-icons">info</i>App Info</a></li>
     </ul>
+    <div class="installprompt">
+        <div class="ip-flex">
+            <div class="ip-el ip-close"><p><i class="material-icons">close</i></p></div>
+            <div class="ip-el ip-text"><p>CSB App</p><span>Our app is fast, small and works offline.</span></div>
+            <div class="ip-el ip-btn"><p><a class="waves-effect waves-light btn red lighten-1">Install</a></p></div>
+        </div>  
+    </div>
     <nav>
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Car Stats Bussiness</a>
@@ -202,6 +210,19 @@
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">ok</a>
+        </div>
+    </div>
+    <!-- modal IOS PWA Install -->
+    <div id="modal-iospwainstall" class="modal">
+        <div class="modal-content center">
+            <h4>Install App</h4>
+            </br>
+            <p class="flow-text">Install this application on your IOS device.</p>
+            <p class="flow-text">Just tap <img class="ios-share-img" src="images/ios-share-icon.png" alt="share icon"> then 'Add to Home Screen'.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="modal-close waves-effect waves-green btn-flat hide-ip">Don't show again</a>
+            <a href="#" class="modal-close waves-effect waves-green btn-flat hide-ip notagainios">ok</a>
         </div>
     </div>
 </body>

@@ -60,3 +60,47 @@ tr.selected{
         width: 50%;
     }
 }
+.installprompt{
+    margin: 0 !important;
+    background-color: #304ffe ;
+    color: #fafafa;
+    height: 65px;
+    width: 100%;
+    display: none;
+}
+.ip-flex{
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.installprompt p{
+    margin: 0 !important;
+    font-weight: bold;
+}
+.ip-el{
+    margin: 20px;
+}
+.ip-close{
+    margin-left: 10px;
+    cursor: pointer;
+}
+.ip-el:nth-child(3){
+    margin-left: auto;
+}
+@media only screen and (max-width:450px){
+    .installprompt{
+        height: 75px;
+    }
+}
+@media only screen and (max-width:340px){
+    .installprompt{
+        height: 90px;
+    }
+}
+.ios-share-img{
+    position: relative;
+    top: 4px;
+}

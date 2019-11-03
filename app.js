@@ -1,12 +1,52 @@
 var readytotable = false;
 var select = false;
 $(function(){
+    $('.modal').modal();
+    $('#modal-iospwainstall').modal('open');
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            deferredPrompt = e;
+            $(".installprompt").slideDown();
+            $(".ip-btn").click(function(){
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice
+                .then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        $(".installprompt").slideUp();
+                    }
+                    deferredPrompt = null;
+                });
+            })
+        });
+        const isIos = () => {
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            return /iphone|ipad|ipod/.test( userAgent );
+          }
+        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+        if (isIos() && !isInStandaloneMode()) {
+            if(localStorage.getItem("ios-ip-notagain") == "true"){
+                $(".installprompt").slideDown();
+            }
+        }
+        $(".ip-close").click(function(){
+            $(".installprompt").slideUp();
+        })
+        $(".ip-btn").click(function(){
+            if(isIos()){
+                $('#modal-iospwainstall').modal('open');
+            }
+        })
+        $(".hide-ip").click(function(){
+            $(".installprompt").slideUp();
+        })
+        $(".notagainios").click(function(){
+            localStorage.setItem('ios-ip-notagain', true);
+        })
     }
     checkToEnable();
     $('.sidenav').sidenav();
-    $('.modal').modal();
     $(".show-appinfo").click(function(){
         $('.sidenav').sidenav('close');
         $('#modal-appinfo').modal('open');
