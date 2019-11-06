@@ -134,6 +134,7 @@ $(function(){
         $("#start-destination-inpt").val("");
         $("#stop-rmoney-inpt").val("");
         $("#stop-rcount-inpt").val("");
+        $("#stop-rcountfuel-inpt").val("");
         $("#stop-time-inpt").val("");
         $("#stop-count-inpt").val("");
         M.updateTextFields();
@@ -195,6 +196,12 @@ $(function(){
                 var datet = d.getFullYear() + '/' +(month<10 ? '0' : '') + month + '/' +(day<10 ? '0' : '') + day;
                 var namet = localStorage.getItem('csb-c-name');
                 var regt = localStorage.getItem('csb-id');
+                var counteratfueling = $("#stop-rcountfuel-inpt").val();
+                if(counteratfueling.length < 1){
+                    counteratfueling = '';
+                }else{
+                    counteratfueling = counteratfueling + " km";
+                }
                 if(document.getElementById("roundtrip-checkbox").checked){
                     var roadt = localStorage.getItem('csb-c-startplace') + " -> " + localStorage.getItem('csb-c-destination') + " -> " + localStorage.getItem('csb-c-startplace');
                 }else{
@@ -218,7 +225,7 @@ $(function(){
 
                 var fmoneyt = smoney;
                 var fcountt = scountmoney;
-                var fuelinfo = fcountt + " L, " + fmoneyt + " PLN";
+                var fuelinfo = fcountt + " L, " + fmoneyt + " PLN" + "<p>" + counteratfueling + "</p>";
 
                 if(localStorage.getItem('csb-table') == undefined || localStorage.getItem('csb-table') == null){
                     localStorage.setItem('csb-table', `<table><tr><th>Date</th><th>User (${regt})</th><th>Route</th><th>Hour of Departure</th><th>Counter Before Departure</th><th>Hour of Arrival</th><th>Counter After Arrival</th><th>Course</th><th>Refueling</th></tr></table>`);
