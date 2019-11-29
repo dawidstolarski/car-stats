@@ -148,7 +148,7 @@ $(function(){
         var startplace = $("#start-startplace-inpt").val();
         var name = $("#start-name-inpt").val();
         var time = $("#start-time-inpt").val();
-        if(count.length > 2 && destination.length > 2 && startplace.length > 2 && name.length > 2){
+        if(count.length > 2 && startplace.length > 2 && name.length > 2){
             $(".error-start").hide();
             localStorage.setItem('csb-c-count', count);
             localStorage.setItem('csb-c-destination', destination);
@@ -202,11 +202,20 @@ $(function(){
                 }else{
                     counteratfueling = counteratfueling + " km";
                 }
-                if(document.getElementById("roundtrip-checkbox").checked){
-                    var roadt = localStorage.getItem('csb-c-startplace') + " -> " + localStorage.getItem('csb-c-destination') + " -> " + localStorage.getItem('csb-c-startplace');
+                if(localStorage.getItem('csb-c-destination') === ""){
+                    if(document.getElementById("roundtrip-checkbox").checked){
+                        var roadt = localStorage.getItem('csb-c-startplace');
+                    }else{
+                        var roadt = localStorage.getItem('csb-c-startplace');
+                    }
                 }else{
-                    var roadt = localStorage.getItem('csb-c-startplace') + " -> " + localStorage.getItem('csb-c-destination');
+                    if(document.getElementById("roundtrip-checkbox").checked){
+                        var roadt = localStorage.getItem('csb-c-startplace') + " -> " + localStorage.getItem('csb-c-destination') + " -> " + localStorage.getItem('csb-c-startplace');
+                    }else{
+                        var roadt = localStorage.getItem('csb-c-startplace') + " -> " + localStorage.getItem('csb-c-destination');
+                    }
                 }
+
                 if(localStorage.getItem('csb-c-time') !== undefined && localStorage.getItem('csb-c-time') !== null){
                     var timest = localStorage.getItem('csb-c-time');
                 }else{
@@ -225,18 +234,17 @@ $(function(){
 
                 var fmoneyt = smoney;
                 var fcountt = scountmoney;
-                var fuelinfo = fcountt + " L, " + fmoneyt + " PLN" + "<p>" + counteratfueling + "</p>";
-
+                
                 if(localStorage.getItem('csb-table') == undefined || localStorage.getItem('csb-table') == null){
-                    localStorage.setItem('csb-table', `<table><tr><th>Date</th><th>User (${regt})</th><th>Route</th><th>Hour of Departure</th><th>Counter Before Departure</th><th>Hour of Arrival</th><th>Counter After Arrival</th><th>Course</th><th>Refueling</th></tr></table>`);
+                    localStorage.setItem('csb-table', `<table><tr><th>Date</th><th>User (${regt})</th><th>Route</th><th>Hour of Departure</th><th>Counter Before Departure</th><th>Hour of Arrival</th><th>Counter After Arrival</th><th>Course (km)</th><th>Refueling (L)</th><th>Refueling (Cost)</th><th>Refueling (Counter)</th></tr></table>`);
                 }
                 if(fuel == false){
                     $('.hiddentable').html(localStorage.getItem('csb-table'));
-                    $('.hiddentable tr:last').after(`<tr><td>${datet}</td><td>${namet}</td><td>${roadt}</td><td>${timest}</td><td>${countst}</td><td>${timeendt}</td><td>${countendt}</td><td>${course} km</td><td>-</td></tr>`);
+                    $('.hiddentable tr:last').after(`<tr><td>${datet}</td><td>${namet}</td><td>${roadt}</td><td>${timest}</td><td>${countst}</td><td>${timeendt}</td><td>${countendt}</td><td>${course}</td><td>-</td></tr>`);
                     localStorage.setItem('csb-table', $(".hiddentable").html());
                 }else{
                     $('.hiddentable').html(localStorage.getItem('csb-table'));
-                    $('.hiddentable tr:last').after(`<tr><td>${datet}</td><td>${namet}</td><td>${roadt}</td><td>${timest}</td><td>${countst}</td><td>${timeendt}</td><td>${countendt}</td><td>${course} km</td><td>${fuelinfo}</td></tr>`);
+                    $('.hiddentable tr:last').after(`<tr><td>${datet}</td><td>${namet}</td><td>${roadt}</td><td>${timest}</td><td>${countst}</td><td>${timeendt}</td><td>${countendt}</td><td>${course}</td><td>${fcountt}</td><td>${fmoneyt}</td><td>${counteratfueling}</td></tr>`);
                     localStorage.setItem('csb-table', $(".hiddentable").html());
                 }
                 localStorage.setItem("csb-prevkmcount", countendt);
