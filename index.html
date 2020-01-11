@@ -32,6 +32,8 @@
         <li><a class="waves-effect show-edit-reg" href="#"><i class="material-icons">edit</i>Edit Informations</a></li>
         <li><div class="divider"></div></li>
         <li><a class="waves-effect show-appinfo " href="#"><i class="material-icons">info</i>App Info</a></li>
+        <li><a class="info-email"></a></li>
+        <li><a class="waves-effect logout">logout</a></li>
     </ul>
     <div class="installprompt">
         <div class="ip-flex">
@@ -39,6 +41,9 @@
             <div class="ip-el ip-text"><p>CSB App</p><span>Our app is fast, small and works offline.</span></div>
             <div class="ip-el ip-btn"><p><a class="waves-effect waves-light btn red lighten-1">Install</a></p></div>
         </div>  
+    </div>
+    <div class="progress">
+        <div class="indeterminate"></div>
     </div>
     <nav>
         <div class="nav-wrapper">
@@ -57,6 +62,7 @@
         <!-- start -->
         <div class="start center">
             <h2>Start your way!</h2>
+            <a class="waves-effect waves-light btn login-btn">connect to database</a>
             <div class="row">
                 <div class="col s12 m6 offset-m3">
                     <div class="card">
@@ -238,4 +244,83 @@
             <a href="#" class="modal-close waves-effect waves-green btn-flat hide-ip notagainios">ok</a>
         </div>
     </div>
+    <!-- modal login -->
+    <div id="modal-login" class="modal">
+        <div class="modal-content center">
+            <h4>Login</h4>
+            </br>
+            <a class="waves-effect waves-light btn logingoogle">Login via Google</a>
+            <p>or</p>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="email-login" type="email" class="validate">
+                    <label for="email-login">Your E-Mail</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+                <div class="input-field col s12 m6">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="password-login" type="password" class="validate">
+                    <label for="password-login">Your Password</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+            </div>
+            <p id="login-err" class="error"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="modal-close waves-effect waves-green btn-flat">close</a>
+            <a href="#" class="modal-close waves-effect waves-green btn-flat registermodalbtn">register</a>
+            <a href="#" class="waves-effect waves-green btn-flat loginpass"><b>login</b></a>
+        </div>
+    </div>
+    <!-- register modal -->
+    <div id="modal-register" class="modal register">
+        <div class="modal-content">
+            <h2>Register</h2>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="email-register" type="email" class="validate">
+                    <label for="email-register">Your E-Mail</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="password-register" type="password" class="validate">
+                    <label for="password-register">Your Password</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+                <div class="input-field col s12 m6">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="password2-register" type="password" class="validate">
+                    <label for="password2-register">Your Password</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+            </div>
+            <p id="register-err" class="error"></p>
+        </div>
+        <div class="modal-footer">
+            <a id="back-login-btn" href="#" class="waves-effect waves-green btn-flat modal-close"><b>close</b></a>  
+            <a id="register-btn" href="#" class="waves-effect waves-green btn-flat"><b>Register</b></a>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyBvvkfXmOi6aN6EZ1Q1wlkiuO6QoIrL-54",
+            authDomain: "webaily.firebaseapp.com",
+            databaseURL: "https://webaily.firebaseio.com",
+            projectId: "webaily",
+            storageBucket: "webaily.appspot.com",
+            messagingSenderId: "9902598182",
+            appId: "1:9902598182:web:caba56c535ea060a7cdee7"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
 </body>

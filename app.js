@@ -1,9 +1,31 @@
 var readytotable = false;
 var select = false;
+var logged = false;
+var prevkmdb;
 $(function(){
+    $(".progress").hide();
+    function save(){
+        var elements = localStorage.getItem('csb-table');
+        var kmdb = localStorage.getItem('csb-prevkmcount');
+        db.collection('users').doc(firebase.auth().currentUser.uid).update({
+            task: elements,
+            prevkm: kmdb
+        });
+        console.log("saved");
+    }
+    $(".logout").click(function(){
+        firebase.auth().signOut().then(function() {
+            console.log('logout')
+        }).catch(function(error) {
+            console.log("error")
+        });
+        $(".info-email").text('');
+        localStorage.removeItem('csb-table');
+        localStorage.removeItem('csb-prevkmcount')
+    })
     $('.modal').modal();
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.register('ssw.js');
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             deferredPrompt = e;
@@ -70,6 +92,9 @@ $(function(){
         $(".error-modal-editinfo").hide();
         $('.sidenav').sidenav('close');
         $('#modal-editinfo').modal('open');
+        if(localStorage.getItem('csb-prevkm') == "false"){
+            $("#prevkm-checkbox").prop('checked', false);
+        }
     })
 
     //edit info modal
@@ -101,6 +126,7 @@ $(function(){
         localStorage.removeItem('csb-table');
         $('#modal-editinfo').modal('close');
         checkToEnable();
+        save();
     })
     //enable all functions
     function checkToEnable(){
@@ -140,6 +166,9 @@ $(function(){
         M.updateTextFields();
         $(".error-start").hide();
         $(".error-continue").hide();
+        if(localStorage.getItem("logged") == "true"){
+            $(".login-btn").hide();
+        }
     }
     //start
     $(".start-road-btn").click(function(){
@@ -157,9 +186,7 @@ $(function(){
             if(time.length > 0){
                 localStorage.setItem('csb-c-time', time);
             }
-            
             started();
-            
         }else{
             $(".error-start").show();
         }
@@ -240,7 +267,7 @@ $(function(){
                 }
                 if(fuel == false){
                     $('.hiddentable').html(localStorage.getItem('csb-table'));
-                    $('.hiddentable tr:last').after(`<tr><td>${datet}</td><td>${namet}</td><td>${roadt}</td><td>${timest}</td><td>${countst}</td><td>${timeendt}</td><td>${countendt}</td><td>${course}</td><td>-</td></tr>`);
+                    $('.hiddentable tr:last').after(`<tr><td>${datet}</td><td>${namet}</td><td>${roadt}</td><td>${timest}</td><td>${countst}</td><td>${timeendt}</td><td>${countendt}</td><td>${course}</td><td>-</td><td>-</td><td>-</td></tr>`);
                     localStorage.setItem('csb-table', $(".hiddentable").html());
                 }else{
                     $('.hiddentable').html(localStorage.getItem('csb-table'));
@@ -248,6 +275,7 @@ $(function(){
                     localStorage.setItem('csb-table', $(".hiddentable").html());
                 }
                 localStorage.setItem("csb-prevkmcount", countendt);
+                save();
                 localStorage.removeItem("csb-c-destination");
                 localStorage.removeItem("csb-c-startplace");
                 localStorage.removeItem("csb-c-name");
@@ -265,15 +293,32 @@ $(function(){
         $('.sidenav').sidenav('close');
         $(".start").slideUp();
         $(".stats").delay(350).fadeIn();
-        $(".showtable").html("<p class='flow-text'>Nothing to see.</p>");
-        if(localStorage.getItem("csb-table") !== undefined && localStorage.getItem("csb-table") !== null){
-            $(".exportoptions").show();
-            $(".showtable").html(localStorage.getItem("csb-table"));
-            $(".edittools").show();
+        if(logged !== true){
+            $(".showtable").html("<p class='flow-text'>Nothing to see.</p>");
+            if(localStorage.getItem("csb-table") !== undefined && localStorage.getItem("csb-table") !== null){
+                $(".exportoptions").show();
+                $(".showtable").html(localStorage.getItem("csb-table"));
+                $(".edittools").show();
+            }else{
+                $(".exportoptions").hide();
+                $(".edittools").hide();
+            }
         }else{
-            $(".exportoptions").hide();
-            $(".edittools").hide();
+            if($(".showtable").text() !== '' ){
+                $(".edittools").show();
+                $(".exportoptions").show();
+            }else{
+                $(".edittools").hide();
+                $(".exportoptions").hide();
+            }
         }
+
+    })
+    $(".login-btn").click(function(){
+        $("#modal-login").modal("open");
+    })
+    $(".registermodalbtn").click(function(){
+        $("#modal-register").modal("open");
     })
     $(".show-start").click(function(){
         $('.sidenav').sidenav('close');
@@ -285,6 +330,7 @@ $(function(){
     })
     $(".delete-table-btn").click(function(){
         localStorage.removeItem("csb-table");
+        save();
         $(".stats").hide();
         checkToEnable();
     })
@@ -292,18 +338,14 @@ $(function(){
         $("tr").last().remove();
         if($(".showtable").html() == "<table><tbody></tbody></table>"){
             localStorage.removeItem("csb-table");
+            save();
         }else{
             localStorage.setItem('csb-table', $(".showtable").html());
+            save();
         }
     })
     $(".print").click(function(){
-        $("table").attr('border', 1);
-        var divToPrint=document.getElementById("toprint");
-        newWin= window.open("");
-        newWin.document.write(divToPrint.outerHTML);
-        newWin.print();
-        newWin.close();
-        $("table").removeAttr("border");
+        window.print();
     })
     $(".exporttable").click(function(){
         var reg = localStorage.getItem("csb-id");
@@ -320,4 +362,90 @@ $(function(){
     $(".lk-logo").click(function(){
         window.open("https://leszekk.eu")
     })
+    $(".logingoogle").click(function(){
+        var provider = new firebase.auth.GoogleAuthProvider();
+        $(".progress").fadeIn();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            console.log(result.additionalUserInfo.isNewUser);
+            $(".progress").slideUp();
+            if(result.additionalUserInfo.isNewUser === true){
+                return db.collection('users').doc(result.user.uid).set({
+                    task: null
+                });
+            }
+        }).catch(function(error) {
+            $(".progress").slideUp();
+            var errorMessage = error.message;
+            console.log(errorMessage);
+            $("#login-err").text(errorMessage);
+        });
+    })
+    $(".loginpass").click(function(){
+        var emailinpt = $("#email-login").val();
+        var passinpt = $("#password-login").val();
+        $(".progress").fadeIn();
+        firebase.auth().signInWithEmailAndPassword(emailinpt, passinpt).catch(function(error) {
+            var errorMessage = error.message;
+            console.log(errorMessage);
+            $("#login-err").text(errorMessage);
+            $(".progress").slideUp();
+        });
+    })
+    $("#register-btn").click(function(){
+        const email = document.getElementById("email-register").value;
+        const password = document.getElementById("password-register").value;
+        const password2 = document.getElementById("password2-register").value;
+        if(password === password2){
+            $(".progress").fadeIn();
+            auth.createUserWithEmailAndPassword(email, password).catch(function(error) {      
+                var errorMessageReg = error.message;
+                document.getElementById("register-err").innerHTML = errorMessageReg;  
+                $(".progress").slideUp();
+            }).then(cred => {
+                return db.collection('users').doc(cred.user.uid).set({
+                    task: null
+                });
+                
+            }).then(() => {
+                $('#modal-register').modal('close');
+                document.getElementById("email-register").value = '';
+                document.getElementById("password-register").value = '';
+                document.getElementById("password2-register").value = '';
+                $(".progress").slideUp();
+            });
+        }
+        else{
+            document.getElementById("register-err").innerHTML = "Passwords are not identical!";
+        }
+    
+    })
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            $(".progress").slideUp();
+            $("#modal-login").modal("close");
+            $("#login-err").text("");
+            $("#email-login").val("");
+            $("#password-login").val("");
+            console.log("logged");
+            $(".login-btn").hide();
+            $(".info-email").text(user.email)
+            logged = true;
+            db.collection('users').doc(firebase.auth().currentUser.uid).onSnapshot(snapshot => {
+                var data = snapshot.data();
+                if(snapshot.exists){
+                    $(".showtable").html(data['task']);
+                    if(data['task'] !== null){
+                        localStorage.setItem('csb-table', data['task']);
+                        console.log('snap to local');
+                        localStorage.setItem('csb-prevkmcount', data['prevkm']);
+                        prevkmdb = data['prevkm'];
+                    }
+                }
+            }, err => console.log(err.message));
+            $(".logout").show();
+        }else{
+            logged = false;
+            $(".logout").hide();
+        }
+    });
 });

@@ -104,3 +104,24 @@ tr.selected{
     position: relative;
     top: 4px;
 }
+@media print {
+    body * {
+      visibility: hidden;
+    }
+    #toprint, #toprint * {
+      visibility: visible;
+    }
+    #toprint {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+}
+.error{
+    color: #f44336;
+    text-align: center;
+}
+.progress{
+    margin: 0 !important;
+    padding: 0;
+}
