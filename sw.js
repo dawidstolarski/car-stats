@@ -27,11 +27,11 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [
   {
     "url": "app.js",
-    "revision": "934083ae70f34776b826dd218b5e7bac"
+    "revision": "a07ee7ffedb33077475f92536459d61c"
   },
   {
     "url": "debug.log",
-    "revision": "53a0ac2f4f002d35909746135e531f00"
+    "revision": "254d589337ceae96fe5a9ba3f3582f28"
   },
   {
     "url": "FileSaver.min.js",
@@ -39,7 +39,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "9828dbd8e243f714b29de823deee698f"
+    "revision": "d158cb2f620e3f6664f0c779ba0affe0"
   },
   {
     "url": "logo-leszekkeu.svg",
@@ -55,7 +55,7 @@ self.__precacheManifest = [
   },
   {
     "url": "style.css",
-    "revision": "1bb3627753cc50970f7ab86d4baf67bc"
+    "revision": "a627ae817871c5bb9b03c9571c253c9c"
   },
   {
     "url": "xlsx.mini.min.js",
