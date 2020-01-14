@@ -5,13 +5,15 @@ var prevkmdb;
 $(function(){
     $(".progress").hide();
     function save(){
-        var elements = localStorage.getItem('csb-table');
-        var kmdb = localStorage.getItem('csb-prevkmcount');
-        db.collection('users').doc(firebase.auth().currentUser.uid).update({
-            task: elements,
-            prevkm: kmdb
-        });
-        console.log("saved");
+        if(logged === true){
+            var elements = localStorage.getItem('csb-table');
+            var kmdb = localStorage.getItem('csb-prevkmcount');
+            db.collection('users').doc(firebase.auth().currentUser.uid).update({
+                task: elements,
+                prevkm: kmdb
+            });
+            console.log("saved");
+        }
     }
     $(".logout").click(function(){
         firebase.auth().signOut().then(function() {
