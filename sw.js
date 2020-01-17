@@ -27,7 +27,7 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [
   {
     "url": "app.js",
-    "revision": "4256ff4d0a9ac82634044a04e3ea9c93"
+    "revision": "fbd86d8d50247684275f8cd94cde17f7"
   },
   {
     "url": "debug.log",
@@ -39,7 +39,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "d158cb2f620e3f6664f0c779ba0affe0"
+    "revision": "fe866cacf770a9821809b1bea29730d1"
   },
   {
     "url": "logo-leszekkeu.svg",
