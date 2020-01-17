@@ -4,6 +4,7 @@ var logged = false;
 var prevkmdb;
 $(function(){
     $(".progress").hide();
+    $('select').formSelect();
     function save(){
         if(logged === true){
             var elements = localStorage.getItem('csb-table');
@@ -14,6 +15,78 @@ $(function(){
             });
             console.log("saved");
         }
+    }
+    function setLang(){
+        if(localStorage.getItem('lang') === "pl"){
+            // menu
+            $(".menu-text-stats").text("Statystyki");
+            $(".menu-text-edtinf").text("Edytuj Informacje");
+            $(".menu-text-logout").text("Wyloguj");
+            // start
+            $(".start-text-title").text("Rozpocznij trasę!");
+            $(".start-text-connectbtn").text("Połącz z bazą danych");
+            $(".start-text-1").text("Stan Licznika");
+            $(".start-text-2").text("Cel");
+            $(".start-text-3").text("Aktualne Miejsce");
+            $(".start-text-4").text("Godzina");
+            $(".start-text-5").text("Imię i Nazwisko");
+            //continue
+            $(".ce-text-title").text("W trakcie...");
+            $(".ce-text-1").text("Stan Licznika");
+            $(".ce-text-2").text("Czas Zakończenia");
+            $(".ce-text-3").text("Droga w Dwie Strony");
+            $(".ce-text-4").text("Tankowanie");
+            $(".ce-text-5").text("Koszt");
+            $(".ce-text-6").text("Ile Zatankowano");
+            $(".ce-text-7").text("Stan Licznika Przy Tankowaniu");
+            //stats
+            $(".st-text-title").text("Statystyki");
+            //edit info modal
+            $(".meinfo-text-title").text("Edytuj Informacje");
+            $(".meinfo-text-1").text("Domyślne Imię i Nazwisko");
+            $(".meinfo-text-2").text("ID Samochodu");
+            $(".meinfo-text-3").text("Domyślne Miejsce Rozpoczęcia");
+            $(".meinfo-text-4").text("Podpowiadaj Poprzednie KM");
+            $(".meinfo-text-5").text("Usuń Trasę");
+            $(".meinfo-text-6").text("Aktualizuj");
+            $(".meinfo-text-7").text("Zamknij");
+        }else{
+            // menu
+            $(".menu-text-stats").text("Stats");
+            $(".menu-text-edtinf").text("Edit Informations");
+            $(".menu-text-logout").text("Logout");
+            // start
+            $(".start-text-title").text("Start your way!");
+            $(".start-text-connectbtn").text("connect to database");
+            $(".start-text-1").text("Meter Reading");
+            $(".start-text-2").text("Destination");
+            $(".start-text-3").text("Starting Place");
+            $(".start-text-4").text("Start Time");
+            $(".start-text-5").text("Your Name");
+            //continue
+            $(".ce-text-title").text("Driving...");
+            $(".ce-text-1").text("Meter Reading");
+            $(".ce-text-2").text("End Time");
+            $(".ce-text-3").text("Round-Trip");
+            $(".ce-text-4").text("Refueling");
+            $(".ce-text-5").text("Fuel Expense");
+            $(".ce-text-6").text("Amount of Fuel");
+            $(".ce-text-7").text("Meter Reading");
+            //stats
+            $(".st-text-title").text("Stats");
+            //edit info modal
+            $(".meinfo-text-title").text("Edit Informations");
+            $(".meinfo-text-1").text("Default name");
+            $(".meinfo-text-2").text("Car ID");
+            $(".meinfo-text-3").text("Default Starting Place");
+            $(".meinfo-text-4").text("Prompt previous kilometers");
+            $(".meinfo-text-5").text("Remove Table");
+            $(".meinfo-text-6").text("Update");
+            $(".meinfo-text-7").text("Close");
+        }
+    }
+    if(localStorage.getItem('lang')){
+        setLang(localStorage.getItem('lang'));
     }
     $(".logout").click(function(){
         firebase.auth().signOut().then(function() {
@@ -27,7 +100,7 @@ $(function(){
     })
     $('.modal').modal();
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('ssw.js');
+        navigator.serviceWorker.register('sw.js');
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             deferredPrompt = e;
@@ -46,7 +119,7 @@ $(function(){
         const isIos = () => {
             const userAgent = window.navigator.userAgent.toLowerCase();
             return /iphone|ipad|ipod/.test( userAgent );
-          }
+        }
         const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
         if (isIos() && !isInStandaloneMode()) {
             if(localStorage.getItem("ios-ip-notagain") == "true" || localStorage.getItem("ios-ip-notagain") == undefined){
@@ -87,6 +160,12 @@ $(function(){
     $('.collapsible').collapsible();
     $('.fixed-action-btn').floatingActionButton();
     $(".show-edit-reg").click(function(){
+        if($('select').val() === "pl"){
+            localStorage.setItem('lang', 'pl')
+        }else{
+            localStorage.setItem('lang', 'en');
+        }
+        setLang();
         $("#edit-name-inpt").val(localStorage.getItem('csb-name'));
         $("#edit-id-inpt").val(localStorage.getItem('csb-id'));
         $("#edit-dloc-inpt").val(localStorage.getItem('csb-dloc'));
@@ -126,6 +205,7 @@ $(function(){
         localStorage.removeItem('csb-prevkm');
         localStorage.removeItem('csb-prevkmcount');
         localStorage.removeItem('csb-table');
+        localStorage.removeItem('lang');
         $('#modal-editinfo').modal('close');
         checkToEnable();
         save();

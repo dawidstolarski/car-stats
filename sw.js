@@ -27,7 +27,7 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [
   {
     "url": "app.js",
-    "revision": "a07ee7ffedb33077475f92536459d61c"
+    "revision": "4256ff4d0a9ac82634044a04e3ea9c93"
   },
   {
     "url": "debug.log",
