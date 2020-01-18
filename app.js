@@ -67,7 +67,6 @@ $(function(){
             $(".meinfo-text-3").text("Domyślne Miejsce Rozpoczęcia");
             $(".meinfo-text-4").text("Podpowiadaj Poprzednie KM");
             $(".meinfo-text-5").text("Usuń Trasę");
-            $(".meinfo-text-6").text("Aktualizuj");
             $(".meinfo-text-7").text("Zamknij");
         }else{
             // menu
@@ -100,7 +99,6 @@ $(function(){
             $(".meinfo-text-3").text("Default Starting Place");
             $(".meinfo-text-4").text("Prompt previous kilometers");
             $(".meinfo-text-5").text("Remove Table");
-            $(".meinfo-text-6").text("Update");
             $(".meinfo-text-7").text("Close");
         }
     }
@@ -165,7 +163,9 @@ $(function(){
         }else{
             localStorage.setItem("lang", "en");
         }
-        setLang();
+        if(!localStorage.getItem("csb-id")){
+            setLang();
+        }
         $("#edit-name-inpt").val(localStorage.getItem("csb-name"));
         $("#edit-id-inpt").val(localStorage.getItem("csb-id"));
         $("#edit-dloc-inpt").val(localStorage.getItem("csb-dloc"));
@@ -394,6 +394,20 @@ $(function(){
                 $(".exportoptions").hide();
             }
         }
+        //translate table
+        if(localStorage.getItem("lang") === "pl" && $(".showtable").text().length > 20){
+            $("th:nth-child(1)").html("Data");
+            $("th:nth-child(2)").html($("th:nth-child(2)").html().replace("User", "Użytkownik"));
+            $("th:nth-child(3)").html("Trasa");
+            $("th:nth-child(4)").html("Godzina Wyjazdu");
+            $("th:nth-child(5)").html("Licznik Przed Wyjazdem");
+            $("th:nth-child(6)").html("Godzina Przyjazdu");
+            $("th:nth-child(7)").html("Licznik Po Przyjeździe");
+            $("th:nth-child(8)").html("Kurs (km)");
+            $("th:nth-child(9)").html("Tankowanie (L)");
+            $("th:nth-child(10)").html("Tankowanie (Koszt)");
+            $("th:nth-child(11)").html("Tankowanie (Licznik)");
+        }
 
     })
     $(".login-btn").click(function(){
@@ -474,9 +488,9 @@ $(function(){
         });
     })
     $("#register-btn").click(function(){
-        const email = document.getElementById("email-register").value;
-        const password = document.getElementById("password-register").value;
-        const password2 = document.getElementById("password2-register").value;
+        var email = document.getElementById("email-register").value;
+        var password = document.getElementById("password-register").value;
+        var password2 = document.getElementById("password2-register").value;
         if(password === password2){
             $(".progress").fadeIn();
             auth.createUserWithEmailAndPassword(email, password).catch(function(error) {      
