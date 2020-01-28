@@ -1,3 +1,7 @@
+// Mógłbyś wyeksportować funkcje do osobnych plików, a w app.js je tylko importował i inicijował :)
+
+// Selektory powyciągaj sobie do zmiennych, będzie łatwiej nimi zarządzać na wypadek zmian.
+
 var readytotable = false;
 var select = false;
 var logged = false;
@@ -395,6 +399,8 @@ $(function(){
             }
         }
         //translate table
+        // th:nth-child nie jest według mnie najlepszym podejściem, ponieważ uzależniasz wykonanie kodu od struktru tabeli. 
+        // A co jeśli będziesz chciał zmienić miejscami pola Tankowanie (L) i Tankowanie (Licznik)? :D
         if(localStorage.getItem("lang") === "pl" && $(".showtable").text().length > 20){
             $("th:nth-child(1)").html("Data");
             $("th:nth-child(2)").html($("th:nth-child(2)").html().replace("User", "Użytkownik"));
@@ -522,7 +528,7 @@ $(function(){
             $("#login-err").text("");
             $("#email-login").val("");
             $("#password-login").val("");
-            console.log("logged");
+            console.log("logged"); // Pousuwaj sobie wszystkie console.logi :D
             $(".login-btn").hide();
             $(".info-email").text(user.email)
             logged = true;
@@ -537,7 +543,7 @@ $(function(){
                         prevkmdb = data["prevkm"];
                     }
                 }
-            }, err => console.log(err.message));
+            }, err => console.log(err.message)); // throw new Error(err.massage) zamiast console.log :)
             $(".logout").show();
         }else{
             logged = false;
